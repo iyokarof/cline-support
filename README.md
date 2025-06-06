@@ -38,7 +38,7 @@ Cline拡張機能タブ > サーバーマーク > Configure MCP Servers
   "mcpServers": {
     "cline-support": {
       "command": "node",
-      "args": ["{ルートディレクトリの絶対パス}/clineSupport/localServer/build/index.js"],
+      "args": ["{ルートディレクトリの絶対パス}/clineSupport/build/index.js"],
       "disabled": false,
       "autoApprove": []
     }
