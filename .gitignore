@@ -137,3 +137,7 @@ dist
 
 # Additional
 /build
+/clineSupport
+.clineignore
+.clinerule
+rule.md
