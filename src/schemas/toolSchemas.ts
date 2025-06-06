@@ -1,6 +1,5 @@
 /**
  * MCPツールのJSON Schema定義
- * template/design.jsonの構造に基づく正確なスキーマ
  */
 
 /**
