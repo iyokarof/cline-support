@@ -4,6 +4,8 @@ import { FileSystemFeatureRepository } from '../persistence/FileSystemFeatureRep
 import { FileSystemTermRepository } from '../persistence/FileSystemTermRepository.js';
 import { AddOrUpdateFeatureUseCase } from '../../application/usecases/AddOrUpdateFeatureUseCase.js';
 import { DeleteFeatureUseCase } from '../../application/usecases/DeleteFeatureUseCase.js';
+import { AddOrUpdateTermUseCase } from '../../application/usecases/AddOrUpdateTermUseCase.js';
+import { DeleteTermUseCase } from '../../application/usecases/DeleteTermUseCase.js';
 import { GetDetailsUseCase } from '../../application/usecases/GetDetailsUseCase.js';
 import { ToolHandlers } from '../../presentation/handlers/ToolHandlers.js';
 import { ResourceHandlers } from '../../presentation/handlers/ResourceHandlers.js';
@@ -21,6 +23,8 @@ export class ClineSupportServer {
   private readonly termRepository: FileSystemTermRepository;
   private readonly addOrUpdateFeatureUseCase: AddOrUpdateFeatureUseCase;
   private readonly deleteFeatureUseCase: DeleteFeatureUseCase;
+  private readonly addOrUpdateTermUseCase: AddOrUpdateTermUseCase;
+  private readonly deleteTermUseCase: DeleteTermUseCase;
   private readonly getDetailsUseCase: GetDetailsUseCase;
   private readonly toolHandlers: ToolHandlers;
   private readonly resourceHandlers: ResourceHandlers;
@@ -52,6 +56,12 @@ export class ClineSupportServer {
     this.deleteFeatureUseCase = new DeleteFeatureUseCase(
       this.featureRepository
     );
+    this.addOrUpdateTermUseCase = new AddOrUpdateTermUseCase(
+      this.termRepository
+    );
+    this.deleteTermUseCase = new DeleteTermUseCase(
+      this.termRepository
+    );
     this.getDetailsUseCase = new GetDetailsUseCase(
       this.featureRepository,
       this.termRepository
@@ -62,6 +72,8 @@ export class ClineSupportServer {
       this.server,
       this.addOrUpdateFeatureUseCase,
       this.deleteFeatureUseCase,
+      this.addOrUpdateTermUseCase,
+      this.deleteTermUseCase,
       this.getDetailsUseCase
     );
 

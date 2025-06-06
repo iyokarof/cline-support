@@ -7,6 +7,8 @@ import {
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { AddOrUpdateFeatureUseCase } from '../../application/usecases/AddOrUpdateFeatureUseCase.js';
 import { DeleteFeatureUseCase } from '../../application/usecases/DeleteFeatureUseCase.js';
+import { AddOrUpdateTermUseCase } from '../../application/usecases/AddOrUpdateTermUseCase.js';
+import { DeleteTermUseCase } from '../../application/usecases/DeleteTermUseCase.js';
 import { GetDetailsUseCase } from '../../application/usecases/GetDetailsUseCase.js';
 import { MESSAGES } from '../../shared/constants/messages.js';
 import { CONFIG } from '../../shared/constants/config.js';
@@ -27,6 +29,8 @@ export class ToolHandlers {
     private readonly server: Server,
     private readonly addOrUpdateFeatureUseCase: AddOrUpdateFeatureUseCase,
     private readonly deleteFeatureUseCase: DeleteFeatureUseCase,
+    private readonly addOrUpdateTermUseCase: AddOrUpdateTermUseCase,
+    private readonly deleteTermUseCase: DeleteTermUseCase,
     private readonly getDetailsUseCase: GetDetailsUseCase
   ) {}
 
@@ -222,36 +226,100 @@ export class ToolHandlers {
   }
 
   /**
-   * ユビキタス言語情報の追加・更新処理
-   * TODO: TermUseCaseの実装が完了したら更新
+   * ユビキタス言語情報の削除処理
    */
-  private async handleAddOrUpdateTerm(args: any) {
-    // 暫定実装：後でTermUseCaseに置き換え
+  private async handleDeleteTerm(args: any) {
+    // 入力検証
+    const validationResult = this.deleteTermUseCase.validateInput(args?.termName);
+    if (!validationResult.success) {
+      throw new McpError(
+        ErrorCode.InvalidParams,
+        validationResult.error.message
+      );
+    }
+
+    // ユースケースの実行
+    const result = await this.deleteTermUseCase.execute(args.termName);
+    if (!result.success) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: result.error.message,
+          },
+        ],
+        isError: true,
+      };
+    }
+
+    // 結果に応じたレスポンス生成
+    if (!result.value.found) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: MESSAGES.ERROR.TERM_NOT_FOUND(args.termName),
+          },
+        ],
+        isError: true,
+      };
+    }
+
     return {
       content: [
         {
           type: 'text',
-          text: MESSAGES.ERROR.INVALID_TERM_FORMAT(),
+          text: MESSAGES.SUCCESS.TERM_DELETED(args.termName),
         },
       ],
-      isError: true,
     };
   }
 
   /**
-   * ユビキタス言語情報の削除処理
-   * TODO: TermUseCaseの実装が完了したら更新
+   * ユビキタス言語情報の追加・更新処理
    */
-  private async handleDeleteTerm(args: any) {
-    // 暫定実装：後でTermUseCaseに置き換え
+  private async handleAddOrUpdateTerm(args: any) {
+    // 入力検証
+    const validationResult = this.addOrUpdateTermUseCase.validateInput(args?.term);
+    if (!validationResult.success) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: validationResult.error.message,
+          },
+        ],
+        isError: true,
+      };
+    }
+
+    // ユースケースの実行
+    const result = await this.addOrUpdateTermUseCase.execute(args.term);
+    if (!result.success) {
+      return {
+        content: [
+          {
+            type: 'text',
+            text: result.error.message,
+          },
+        ],
+        isError: true,
+      };
+    }
+
+    // 成功レスポンスの生成
+    const termName = args.term.term.name;
+    const message = result.value.isUpdate 
+      ? MESSAGES.SUCCESS.TERM_UPDATED(termName)
+      : MESSAGES.SUCCESS.TERM_ADDED(termName);
+
     return {
       content: [
         {
           type: 'text',
-          text: MESSAGES.ERROR.TERM_NAME_REQUIRED(),
+          text: message,
         },
       ],
-      isError: true,
     };
   }
 
