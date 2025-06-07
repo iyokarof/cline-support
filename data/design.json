@@ -133,6 +133,158 @@
         "既存機能名との重複チェックは配列の線形検索で実装",
         "バリデーションは型定義とランタイム検証の二重チェック"
       ]
+    },
+    {
+      "feature": {
+        "name": "InfrastructureLayerTesting",
+        "purpose": "infrastructure層のクラスに対して高品質なユニットテストを実装し、90%以上のコードカバレッジと包括的なエラーハンドリングテストを提供する",
+        "userStories": [
+          "開発者として、infrastructure層の動作が確実であることを検証したい",
+          "開発者として、リファクタリング時に既存機能が壊れていないことを確認したい",
+          "開発者として、エラーケースが適切に処理されることを保証したい"
+        ]
+      },
+      "inputs": [
+        {
+          "name": "targetClasses",
+          "dataTypeDescription": "テスト対象のinfrastructure層クラス群",
+          "constraints": [
+            "FileSystemFeatureRepository",
+            "FileSystemTermRepository",
+            "ClineSupportServer",
+            "RestServer"
+          ],
+          "purpose": "ユニットテスト実装対象の特定"
+        },
+        {
+          "name": "testFramework",
+          "dataTypeDescription": "テストフレームワークとその設定",
+          "constraints": [
+            "Jest",
+            "ts-jest",
+            "TypeScript",
+            "ESModules対応"
+          ],
+          "purpose": "テスト実行環境の構築"
+        },
+        {
+          "name": "mockingStrategy",
+          "dataTypeDescription": "モック化戦略",
+          "constraints": [
+            "外部依存関係のモック化",
+            "ファイルシステム分離",
+            "ネットワーク層モック"
+          ],
+          "purpose": "テスト分離と信頼性確保"
+        }
+      ],
+      "outputs": [
+        {
+          "condition": "正常実装時",
+          "dataDescription": "動作するユニットテストスイート",
+          "structureHint": {
+            "testFiles": "4つのテストファイル",
+            "coverage": "90%以上",
+            "testCases": "正常系・異常系・エラーケースを網羅"
+          }
+        },
+        {
+          "condition": "設定問題発生時",
+          "dataDescription": "ESModules互換性の課題と解決方法",
+          "structureHint": {
+            "issue": "import.meta.url TypeScriptエラー",
+            "workaround": "Jest設定調整またはCommonJS変換"
+          }
+        }
+      ],
+      "coreLogicSteps": [
+        {
+          "stepNumber": 1,
+          "description": "Jest環境設定：ESModules対応TypeScript設定",
+          "inputs": [
+            "package.json",
+            "tsconfig.json",
+            "jest.config.cjs"
+          ],
+          "output": "テスト実行環境"
+        },
+        {
+          "stepNumber": 2,
+          "description": "リポジトリクラステスト：ファイルシステム分離テスト",
+          "inputs": [
+            "FileSystemFeatureRepository",
+            "FileSystemTermRepository"
+          ],
+          "output": "persistence層テストスイート"
+        },
+        {
+          "stepNumber": 3,
+          "description": "サーバークラステスト：外部依存モック化",
+          "inputs": [
+            "ClineSupportServer",
+            "RestServer"
+          ],
+          "output": "サーバー層テストスイート"
+        },
+        {
+          "stepNumber": 4,
+          "description": "Result型・Option型対応：型ガード実装",
+          "inputs": [
+            "関数型プログラミング型定義"
+          ],
+          "output": "型安全なテストコード"
+        },
+        {
+          "stepNumber": 5,
+          "description": "カバレッジ設定：90%閾値設定と確認",
+          "inputs": [
+            "テストスイート",
+            "Jest設定"
+          ],
+          "output": "品質保証レポート"
+        }
+      ],
+      "errorHandling": [
+        {
+          "errorCondition": "ESModules import.meta.url TypeScriptエラー",
+          "detectionPoint": "ステップ1",
+          "handlingStrategyDescription": "Jest設定でmodule: ES2022指定、またはCommonJS変換",
+          "resultingOutputCondition": "設定問題発生時"
+        },
+        {
+          "errorCondition": "モック設定エラー",
+          "detectionPoint": "ステップ2-3",
+          "handlingStrategyDescription": "jest.mock()の正しい配置、MockedClass型定義、Object.assign使用",
+          "resultingOutputCondition": "正常実装時"
+        },
+        {
+          "errorCondition": "型ガードエラー",
+          "detectionPoint": "ステップ4",
+          "handlingStrategyDescription": "Result.success確認後のreturn文、型ナローイング実装",
+          "resultingOutputCondition": "正常実装時"
+        }
+      ],
+      "nonFunctionalRequirements": [
+        {
+          "requirement": "テスト実行時間：10秒以内",
+          "considerationsForLogic": "一時ファイル操作の最適化、並列実行制御"
+        },
+        {
+          "requirement": "テスト分離：他テストへの影響なし",
+          "considerationsForLogic": "beforeEach/afterEachでの環境リセット、一意な一時ディレクトリ使用"
+        },
+        {
+          "requirement": "保守性：理解しやすいテストコード",
+          "considerationsForLogic": "AAA（Arrange-Act-Assert）パターン、明確なテスト名、適切なコメント"
+        }
+      ],
+      "documentationNotes": [
+        "ESModulesプロジェクトでのJest設定は複雑で、import.meta.url使用時に注意が必要",
+        "infrastructure層テストでは外部依存関係の適切なモック化が重要",
+        "Result型・Option型を使った関数型プログラミングパターンでは型ガードによる型安全性確保が必須",
+        "ファイルシステムテストでは一時ディレクトリを使った分離が信頼性確保の鍵",
+        "MCPサーバーやExpressサーバーのテストではシグナルハンドリングやミドルウェアのテストも重要"
+      ]
     }
   ],
   "terms": [
@@ -370,6 +522,185 @@
           "エンティティは一意のIDを持つ",
           "値オブジェクトはイミュータブル",
           "ドメインロジックはドメイン層に集約"
+        ]
+      }
+    },
+    {
+      "term": {
+        "name": "JestESModulesConfiguration",
+        "definition": "ESModulesプロジェクトでJestを動作させるための設定パターン。TypeScriptとESModulesの組み合わせで必要となる複雑な設定を包含する",
+        "aliases": [
+          "Jest ES設定",
+          "ESM Jest設定",
+          "TypeScript Jest ESM"
+        ],
+        "context": {
+          "boundedContext": "テスト環境構築",
+          "scope": "ESModulesを使用するTypeScriptプロジェクトでのJest設定"
+        }
+      },
+      "details": {
+        "category": "技術設定パターン",
+        "examples": [
+          {
+            "scenario": "import.meta.url使用プロジェクト",
+            "description": "preset: 'ts-jest/presets/default-esm', extensionsToTreatAsEsm: ['.ts'], moduleNameMapper設定が必要"
+          },
+          {
+            "scenario": "TypeScriptコンパイラエラー回避",
+            "description": "transform設定でmodule: 'ES2022', target: 'ES2022'を明示的指定"
+          }
+        ],
+        "ambiguitiesAndBoundaries": [
+          "CommonJSプロジェクトでは不要な設定",
+          "Node.jsバージョンによって動作が異なる可能性",
+          "ライブラリの互換性問題が発生することがある"
+        ]
+      },
+      "relationships": {
+        "relatedTerms": [
+          {
+            "termName": "TypeScriptTestConfiguration",
+            "relationshipType": "包含関係"
+          }
+        ],
+        "associatedFunctions": [
+          "InfrastructureLayerTesting"
+        ]
+      },
+      "implementation": {
+        "codeMapping": "jest.config.cjs",
+        "dataStructureHint": {
+          "preset": "ts-jest/presets/default-esm",
+          "extensionsToTreatAsEsm": "['.ts']",
+          "transform": "ts-jest with ES2022 config",
+          "moduleNameMapper": "JS extension mapping"
+        },
+        "constraints": [
+          "Node.js ES modules support required",
+          "ts-jest version compatibility"
+        ]
+      }
+    },
+    {
+      "term": {
+        "name": "MockingStrategy",
+        "definition": "ユニットテストにおいて外部依存関係を分離し、テスト対象クラスの動作のみを検証するための技術戦略。infrastructure層テストで特に重要",
+        "aliases": [
+          "モック化戦略",
+          "テスト分離戦略",
+          "Dependencies Mocking"
+        ],
+        "context": {
+          "boundedContext": "ユニットテスト",
+          "scope": "外部依存関係を持つクラスのテスト分離"
+        }
+      },
+      "details": {
+        "category": "テスト設計パターン",
+        "examples": [
+          {
+            "scenario": "ファイルシステムリポジトリテスト",
+            "description": "一時ディレクトリを使用してファイルI/O操作を実際のファイルシステムから分離"
+          },
+          {
+            "scenario": "MCPサーバーテスト",
+            "description": "SDK Server, Transport, リポジトリクラスをjest.mockでモック化"
+          },
+          {
+            "scenario": "RESTサーバーテスト",
+            "description": "Express app, router, middlewareをObject.assignでモック化"
+          }
+        ],
+        "ambiguitiesAndBoundaries": [
+          "統合テストとは異なり、実際の外部サービスは使用しない",
+          "モック設定の複雑さとテストの信頼性のバランスが重要",
+          "TypeScript型定義との整合性維持が必要"
+        ]
+      },
+      "relationships": {
+        "relatedTerms": [
+          {
+            "termName": "JestESModulesConfiguration",
+            "relationshipType": "技術実装での依存関係"
+          }
+        ],
+        "associatedFunctions": [
+          "InfrastructureLayerTesting"
+        ]
+      },
+      "implementation": {
+        "codeMapping": "jest.mock(), MockedClass<T>, Object.assign patterns",
+        "dataStructureHint": {
+          "jestMock": "automatic mocking",
+          "manualMock": "Object.assign for complex objects",
+          "typeDefinition": "MockedClass<T> for type safety"
+        },
+        "constraints": [
+          "Jest framework dependency",
+          "TypeScript type compatibility",
+          "Mock lifecycle management"
+        ]
+      }
+    },
+    {
+      "term": {
+        "name": "FunctionalTypeTestPattern",
+        "definition": "Result型・Option型などの関数型プログラミング型をテストする際の型ガード適用パターン。TypeScriptの型安全性を保ちながらテストアサーションを実行する",
+        "aliases": [
+          "関数型テストパターン",
+          "Result型テストパターン",
+          "型ガードテスト"
+        ],
+        "context": {
+          "boundedContext": "関数型プログラミング",
+          "scope": "Result<T, E>とOption<T>型を使用するメソッドのテスト"
+        }
+      },
+      "details": {
+        "category": "テストコーディングパターン",
+        "examples": [
+          {
+            "scenario": "Result型の成功パターンテスト",
+            "description": "expect(result.success).toBe(true); if (!result.success) return; でTypeScript型ガード適用"
+          },
+          {
+            "scenario": "Option型のSomeパターンテスト",
+            "description": "expect(option.isSome).toBe(true); if (!option.isSome) return; で値アクセス前の型確認"
+          },
+          {
+            "scenario": "エラーケーステスト",
+            "description": "expect(result.success).toBe(false); でFailure型のアサーション実行"
+          }
+        ],
+        "ambiguitiesAndBoundaries": [
+          "型ガードなしでは TypeScript コンパイルエラーが発生",
+          "early return パターンでテスト実行の継続性確保が重要",
+          "モナド型特有のメソッドチェーンは避けてフラットな構造で記述"
+        ]
+      },
+      "relationships": {
+        "relatedTerms": [
+          {
+            "termName": "MockingStrategy",
+            "relationshipType": "テスト実装での併用関係"
+          }
+        ],
+        "associatedFunctions": [
+          "InfrastructureLayerTesting"
+        ]
+      },
+      "implementation": {
+        "codeMapping": "if (!result.success) return; pattern in test files",
+        "dataStructureHint": {
+          "typeGuard": "runtime type checking with early return",
+          "assertion": "Jest expect statements before type guard",
+          "access": "safe property access after type narrowing"
+        },
+        "constraints": [
+          "TypeScript strict mode required",
+          "Jest testing framework",
+          "Result/Option type definitions"
         ]
       }
     }
