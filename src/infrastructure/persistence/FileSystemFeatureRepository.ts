@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { Feature } from '../../domain/entities/Feature.js';
 import { FeatureName } from '../../domain/valueObjects/FeatureName.js';
 import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository.js';
-import { FeatureData, FeatureListItemData, OperationResultData, DeletionResultData, DesignDocumentData } from '../../domain/types.js';
+import { FeatureListItemData, OperationResultData, DeletionResultData, DesignDocumentData } from '../../domain/types.js';
 import { Result, Option } from '../../shared/types/functional.js';
 import { CONFIG } from '../../shared/constants/config.js';
 import { MESSAGES } from '../../shared/constants/messages.js';
@@ -20,7 +20,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
   private readonly designDocumentPath: string;
 
   constructor() {
-    this.designDocumentPath = path.resolve(__dirname, CONFIG.PATHS.DATA_DIRECTORY, CONFIG.PATHS.DESIGN_DOCUMENT_FILE);
+    const roolPath = path.resolve(__dirname, '../../../');
+    this.designDocumentPath = path.resolve(roolPath, CONFIG.PATHS.DATA_DIRECTORY, CONFIG.PATHS.DESIGN_DOCUMENT_FILE);
   }
 
   /**
@@ -47,8 +48,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`機能定義の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -84,8 +85,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`全機能定義の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -110,8 +111,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`機能定義一覧の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -138,9 +139,9 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
         newFeatures[existingIndex] = feature.data;
         updatedDocument = { ...document, features: newFeatures };
       } else {
-        updatedDocument = { 
-          ...document, 
-          features: [...document.features, feature.data] 
+        updatedDocument = {
+          ...document,
+          features: [...document.features, feature.data]
         };
       }
 
@@ -154,8 +155,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`機能定義の保存中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -192,8 +193,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`機能定義の削除中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -213,8 +214,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`機能定義の存在確認中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -234,8 +235,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`機能定義数の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -275,8 +276,8 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`機能定義の一括取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -306,7 +307,7 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
       }
 
       return Result.failure(
-        error instanceof Error 
+        error instanceof Error
           ? new Error(MESSAGES.ERROR.DESIGN_LOAD_FAILED(error.message))
           : new Error(MESSAGES.ERROR.DESIGN_LOAD_FAILED(String(error)))
       );
@@ -324,7 +325,7 @@ export class FileSystemFeatureRepository implements IFeatureRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
+        error instanceof Error
           ? new Error(MESSAGES.ERROR.DESIGN_SAVE_FAILED(error.message))
           : new Error(MESSAGES.ERROR.DESIGN_SAVE_FAILED(String(error)))
       );

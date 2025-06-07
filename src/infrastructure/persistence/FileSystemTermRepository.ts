@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { Term } from '../../domain/entities/Term.js';
 import { TermName } from '../../domain/valueObjects/TermName.js';
 import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
-import { TermData, TermListItemData, OperationResultData, DeletionResultData, DesignDocumentData } from '../../domain/types.js';
+import { TermListItemData, OperationResultData, DeletionResultData, DesignDocumentData } from '../../domain/types.js';
 import { Result, Option } from '../../shared/types/functional.js';
 import { CONFIG } from '../../shared/constants/config.js';
 import { MESSAGES } from '../../shared/constants/messages.js';
@@ -20,7 +20,8 @@ export class FileSystemTermRepository implements ITermRepository {
   private readonly designDocumentPath: string;
 
   constructor() {
-    this.designDocumentPath = path.resolve(__dirname, CONFIG.PATHS.DATA_DIRECTORY, CONFIG.PATHS.DESIGN_DOCUMENT_FILE);
+    const roolPath = path.resolve(__dirname, '../../../');
+    this.designDocumentPath = path.resolve(roolPath, CONFIG.PATHS.DATA_DIRECTORY, CONFIG.PATHS.DESIGN_DOCUMENT_FILE);
   }
 
   /**
@@ -47,8 +48,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`ユビキタス言語情報の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -84,8 +85,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`全ユビキタス言語情報の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -111,8 +112,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`ユビキタス言語情報一覧の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -139,9 +140,9 @@ export class FileSystemTermRepository implements ITermRepository {
         newTerms[existingIndex] = term.data;
         updatedDocument = { ...document, terms: newTerms };
       } else {
-        updatedDocument = { 
-          ...document, 
-          terms: [...document.terms, term.data] 
+        updatedDocument = {
+          ...document,
+          terms: [...document.terms, term.data]
         };
       }
 
@@ -155,8 +156,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`ユビキタス言語情報の保存中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -193,8 +194,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`ユビキタス言語情報の削除中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -214,8 +215,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`ユビキタス言語情報の存在確認中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -235,8 +236,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`ユビキタス言語情報数の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -276,8 +277,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`ユビキタス言語情報の一括取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -293,7 +294,7 @@ export class FileSystemTermRepository implements ITermRepository {
         return Result.failure(allTermsResult.error);
       }
 
-      const relatedTerms = allTermsResult.value.filter(term => 
+      const relatedTerms = allTermsResult.value.filter(term =>
         term.isAssociatedWithFunction(functionName)
       );
 
@@ -301,8 +302,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`機能関連ユビキタス言語情報の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -318,7 +319,7 @@ export class FileSystemTermRepository implements ITermRepository {
         return Result.failure(allTermsResult.error);
       }
 
-      const categoryTerms = allTermsResult.value.filter(term => 
+      const categoryTerms = allTermsResult.value.filter(term =>
         term.category === category
       );
 
@@ -326,8 +327,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`カテゴリ別ユビキタス言語情報の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -343,7 +344,7 @@ export class FileSystemTermRepository implements ITermRepository {
         return Result.failure(allTermsResult.error);
       }
 
-      const contextTerms = allTermsResult.value.filter(term => 
+      const contextTerms = allTermsResult.value.filter(term =>
         term.boundedContext === boundedContext
       );
 
@@ -351,8 +352,8 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
-          ? error 
+        error instanceof Error
+          ? error
           : new Error(`境界づけられたコンテキスト別ユビキタス言語情報の取得中にエラーが発生しました: ${String(error)}`)
       );
     }
@@ -382,7 +383,7 @@ export class FileSystemTermRepository implements ITermRepository {
       }
 
       return Result.failure(
-        error instanceof Error 
+        error instanceof Error
           ? new Error(MESSAGES.ERROR.DESIGN_LOAD_FAILED(error.message))
           : new Error(MESSAGES.ERROR.DESIGN_LOAD_FAILED(String(error)))
       );
@@ -400,7 +401,7 @@ export class FileSystemTermRepository implements ITermRepository {
 
     } catch (error) {
       return Result.failure(
-        error instanceof Error 
+        error instanceof Error
           ? new Error(MESSAGES.ERROR.DESIGN_SAVE_FAILED(error.message))
           : new Error(MESSAGES.ERROR.DESIGN_SAVE_FAILED(String(error)))
       );

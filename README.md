@@ -2,7 +2,17 @@
 
 大規模プロジェクトをClineで開発するためのシステムです。
 
-プロジェクト知識を提供するMCPサーバーと、`.clinerules`やコーディング原則等を示したファイルから構成されています。
+プロジェクト知識を提供するMCPサーバーと、REST APIサーバー、`.clinerules`やコーディング原則等を示したファイルから構成されています。
+
+## 機能
+
+### MCPサーバーモード（デフォルト）
+- Cline拡張機能と連携してプロジェクト知識を提供
+- 機能定義とユビキタス言語情報の管理
+
+### REST APIサーバーモード
+- デバッグや外部ツールとの連携用のREST APIを提供
+- MCPサーバーと同等の機能をHTTP経由で利用可能
 
 ## 環境構築手順
 
@@ -50,13 +60,61 @@ Cline拡張機能タブ > サーバーマーク > Configure MCP Servers
 
 VS Codeを再起動して、MCPサーバーの設定を反映させます。
 
+## REST APIサーバーの使用方法
+
+### 起動方法
+
+```bash
+# REST APIサーバーとして起動
+npm run start:rest
+
+# または開発用（ビルド + 起動）
+npm run dev:rest
+```
+
+### アクセス情報
+
+- **ベースURL**: http://localhost:3000
+- **API ベースパス**: http://localhost:3000/api
+- **ヘルスチェック**: http://localhost:3000/api/health
+
+### 利用可能なエンドポイント
+
+#### 機能定義関連
+- `POST /api/features` - 機能定義の追加・更新
+- `DELETE /api/features/:name` - 機能定義の削除
+- `GET /api/resources/features` - 機能定義一覧の取得
+
+#### ユビキタス言語関連
+- `POST /api/terms` - ユビキタス言語の追加・更新
+- `DELETE /api/terms/:name` - ユビキタス言語の削除
+- `GET /api/resources/terms` - ユビキタス言語一覧の取得
+
+#### その他
+- `POST /api/details` - 詳細情報の取得
+- `GET /api/resources/statistics` - 統計情報の取得
+- `GET /api/health` - ヘルスチェック
+
 ## 開発情報
 
 ### スクリプト
 
+#### 共通
 - `npm run build` - TypeScriptのコンパイル
-- `npm run start` - サーバーの直接実行（デバッグ用）
-- `npm run dev` - ビルドしてから実行
+
+#### MCPサーバー
+- `npm run start` - MCPサーバーとして起動
+- `npm run dev` - ビルド + MCPサーバー起動
+
+#### REST APIサーバー
+- `npm run start:rest` - REST APIサーバーとして起動
+- `npm run dev:rest` - ビルド + REST APIサーバー起動
+
+### 環境変数
+
+- `SERVER_MODE` - サーバーモード（`mcp` または `rest`、デフォルト: `mcp`）
+- `PORT` - REST APIサーバーのポート番号（デフォルト: 3000）
+- `HOST` - REST APIサーバーのホスト（デフォルト: localhost）
 
 ### データ形式
 

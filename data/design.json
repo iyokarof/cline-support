@@ -1,4 +1,377 @@
 {
-  "features": [],
-  "terms": []
+  "features": [
+    {
+      "feature": {
+        "name": "FeatureDefinitionManager",
+        "purpose": "プロジェクトの機能定義を管理し、追加・更新・削除・取得を行う機能",
+        "userStories": [
+          "開発者として、新しい機能定義を追加したい",
+          "開発者として、既存の機能定義を更新したい",
+          "開発者として、不要な機能定義を削除したい",
+          "開発者として、機能定義の詳細を取得したい"
+        ]
+      },
+      "inputs": [
+        {
+          "name": "featureDefinition",
+          "dataTypeDescription": "機能定義オブジェクト。名前、目的、ユーザーストーリー、入力、出力、コアロジックステップ、エラーハンドリング等を含む",
+          "constraints": [
+            "feature.nameは必須で空文字列不可",
+            "feature.purposeは必須で空文字列不可",
+            "全ての配列フィールドは必須"
+          ],
+          "purpose": "管理対象となる機能定義の完全な仕様"
+        },
+        {
+          "name": "featureName",
+          "dataTypeDescription": "文字列。機能の一意識別子",
+          "constraints": [
+            "空文字列不可",
+            "最小長1文字以上"
+          ],
+          "purpose": "削除や検索時の機能特定"
+        }
+      ],
+      "outputs": [
+        {
+          "condition": "機能定義が正常に追加された場合",
+          "dataDescription": "操作結果オブジェクト。追加されたことを示すフラグと機能名",
+          "structureHint": {
+            "isUpdate": false,
+            "featureName": "string"
+          }
+        },
+        {
+          "condition": "機能定義が正常に更新された場合",
+          "dataDescription": "操作結果オブジェクト。更新されたことを示すフラグと機能名",
+          "structureHint": {
+            "isUpdate": true,
+            "featureName": "string"
+          }
+        },
+        {
+          "condition": "機能定義が正常に削除された場合",
+          "dataDescription": "削除結果オブジェクト",
+          "structureHint": {
+            "found": true,
+            "featureName": "string"
+          }
+        },
+        {
+          "condition": "バリデーションエラーが発生した場合",
+          "dataDescription": "エラー情報オブジェクト",
+          "structureHint": {
+            "isError": true,
+            "message": "string"
+          }
+        }
+      ],
+      "coreLogicSteps": [
+        {
+          "stepNumber": 1,
+          "description": "入力パラメータのバリデーション実行",
+          "inputs": [
+            "featureDefinition",
+            "featureName"
+          ],
+          "output": "validationResult"
+        },
+        {
+          "stepNumber": 2,
+          "description": "既存機能定義の存在確認",
+          "inputs": [
+            "featureName",
+            "designDocument"
+          ],
+          "output": "existingFeatureIndex"
+        },
+        {
+          "stepNumber": 3,
+          "description": "機能定義の追加または更新実行",
+          "inputs": [
+            "featureDefinition",
+            "existingFeatureIndex",
+            "designDocument"
+          ],
+          "output": "updatedDesignDocument"
+        },
+        {
+          "stepNumber": 4,
+          "description": "設計書ファイルへの永続化",
+          "inputs": [
+            "updatedDesignDocument"
+          ],
+          "output": "saveResult"
+        }
+      ],
+      "errorHandling": [
+        {
+          "errorCondition": "入力パラメータのバリデーション失敗",
+          "detectionPoint": "ステップ1",
+          "handlingStrategyDescription": "バリデーションエラーメッセージを含むエラーレスポンスを返す",
+          "resultingOutputCondition": "バリデーションエラーが発生した場合"
+        },
+        {
+          "errorCondition": "ファイル保存の失敗",
+          "detectionPoint": "ステップ4",
+          "handlingStrategyDescription": "ファイルシステムエラーを適切にラップしてエラーレスポンスを返す",
+          "resultingOutputCondition": "バリデーションエラーが発生した場合"
+        }
+      ],
+      "nonFunctionalRequirements": [
+        {
+          "requirement": "データ整合性の保証",
+          "considerationsForLogic": "ステップ2-4をアトミックに実行し、失敗時は元の状態を保持"
+        },
+        {
+          "requirement": "型安全性の確保",
+          "considerationsForLogic": "ステップ1でTypeScriptの型システムとランタイムバリデーションを併用"
+        }
+      ],
+      "documentationNotes": [
+        "機能定義は設計書ファイル（design.json）に永続化される",
+        "既存機能名との重複チェックは配列の線形検索で実装",
+        "バリデーションは型定義とランタイム検証の二重チェック"
+      ]
+    }
+  ],
+  "terms": [
+    {
+      "term": {
+        "name": "機能定義",
+        "definition": "ソフトウェアシステムが提供する特定の機能の仕様を記述した構造化された情報",
+        "aliases": [
+          "Feature",
+          "FeatureDefinition",
+          "機能仕様"
+        ],
+        "context": {
+          "boundedContext": "設計管理コンテキスト",
+          "scope": "プロジェクト全体の機能設計と実装の架け橋となる中核概念"
+        }
+      },
+      "details": {
+        "category": "エンティティ",
+        "examples": [
+          {
+            "scenario": "新しい検索機能を開発する場合",
+            "description": "検索キーワード入力から結果表示までの処理フローを、入力・出力・コアロジックステップとして構造化して記述"
+          },
+          {
+            "scenario": "既存のユーザー管理機能を改修する場合",
+            "description": "現在の機能定義を更新し、新しい要件やエラーハンドリングを追加"
+          }
+        ],
+        "ambiguitiesAndBoundaries": [
+          "単なる要件定義書ではなく、実装に直接つながる構造化された仕様",
+          "コード実装そのものではなく、実装の論理的な設計図",
+          "テストケースや詳細な画面仕様は含まない"
+        ]
+      },
+      "relationships": {
+        "relatedTerms": [
+          {
+            "termName": "設計書",
+            "relationshipType": "機能定義は設計書に格納される"
+          },
+          {
+            "termName": "コアロジックステップ",
+            "relationshipType": "機能定義はコアロジックステップを含む"
+          }
+        ],
+        "associatedFunctions": [
+          "FeatureDefinitionManager"
+        ]
+      },
+      "implementation": {
+        "codeMapping": "Feature interface in types.ts",
+        "dataStructureHint": {
+          "feature": {
+            "name": "string",
+            "purpose": "string",
+            "userStories": "string[]"
+          },
+          "inputs": "Input[]",
+          "outputs": "Output[]",
+          "coreLogicSteps": "CoreLogicStep[]"
+        },
+        "constraints": [
+          "feature.nameは一意である必要がある",
+          "すべての配列フィールドは空でも良いが、nullは不可",
+          "coreLogicStepsのstepNumberは連続した正の整数"
+        ]
+      }
+    },
+    {
+      "term": {
+        "name": "設計書",
+        "definition": "プロジェクトの機能定義とユビキタス言語情報を統合管理する構造化文書",
+        "aliases": [
+          "DesignDocument",
+          "設計文書"
+        ],
+        "context": {
+          "boundedContext": "設計管理コンテキスト",
+          "scope": "プロジェクト全体の設計情報の中央集約化と整合性管理"
+        }
+      },
+      "details": {
+        "category": "エンティティ",
+        "examples": [
+          {
+            "scenario": "プロジェクト初期化時",
+            "description": "空の機能定義配列と用語配列を持つ設計書を作成"
+          },
+          {
+            "scenario": "機能追加時",
+            "description": "既存の設計書に新しい機能定義を追加し、関連する用語も更新"
+          }
+        ],
+        "ambiguitiesAndBoundaries": [
+          "単なるドキュメントではなく、システムの動作に直接影響する構造化データ",
+          "コードそのものではないが、コード生成の基盤となる",
+          "バージョン管理の対象となる永続化されたアーティファクト"
+        ]
+      },
+      "relationships": {
+        "relatedTerms": [
+          {
+            "termName": "機能定義",
+            "relationshipType": "設計書は複数の機能定義を含む"
+          },
+          {
+            "termName": "ユビキタス言語",
+            "relationshipType": "設計書は複数のユビキタス言語情報を含む"
+          }
+        ],
+        "associatedFunctions": [
+          "FeatureDefinitionManager"
+        ]
+      },
+      "implementation": {
+        "codeMapping": "DesignDocument interface in types.ts",
+        "dataStructureHint": {
+          "features": "Feature[]",
+          "terms": "Term[]"
+        },
+        "constraints": [
+          "featuresとtermsは必須配列（空配列は許可）",
+          "JSONファイルとして永続化される",
+          "UTF-8エンコーディングで保存される"
+        ]
+      }
+    },
+    {
+      "term": {
+        "name": "クリーンアーキテクチャ",
+        "definition": "ソフトウェアシステムを複数の同心円状のレイヤーに分離し、依存関係を外側から内側へ一方向にする設計原則",
+        "aliases": [
+          "Clean Architecture",
+          "オニオンアーキテクチャ",
+          "ヘキサゴナルアーキテクチャ"
+        ],
+        "context": {
+          "boundedContext": "アーキテクチャ設計コンテキスト",
+          "scope": "システム全体のアーキテクチャ設計と実装方針"
+        }
+      },
+      "details": {
+        "category": "アーキテクチャパターン",
+        "examples": [
+          {
+            "scenario": "MCPサーバーのリファクタリング",
+            "description": "ドメイン層（エンティティ、値オブジェクト）、アプリケーション層（ユースケース）、インフラストラクチャ層（リポジトリ実装）、プレゼンテーション層（ハンドラー）に分離"
+          }
+        ],
+        "ambiguitiesAndBoundaries": [
+          "単なるレイヤー分けではなく、依存性逆転の原則に基づく設計",
+          "外部ライブラリや技術詳細はインフラストラクチャ層に隔離される"
+        ]
+      },
+      "relationships": {
+        "relatedTerms": [
+          {
+            "termName": "DDD",
+            "relationshipType": "組み合わせて使用される設計手法"
+          },
+          {
+            "termName": "機能定義",
+            "relationshipType": "クリーンアーキテクチャで管理されるドメインオブジェクト"
+          }
+        ],
+        "associatedFunctions": [
+          "FeatureDefinitionManager"
+        ]
+      },
+      "implementation": {
+        "codeMapping": "src/ディレクトリ構造全体",
+        "dataStructureHint": {
+          "domain": "エンティティ、値オブジェクト、リポジトリI/F",
+          "application": "ユースケース、アプリケーションサービス",
+          "infrastructure": "リポジトリ実装、外部API接続",
+          "presentation": "MCPハンドラー、DTO"
+        },
+        "constraints": [
+          "依存関係は外側から内側への一方向のみ",
+          "ドメイン層は他の層に依存しない",
+          "インフラストラクチャ層はインターフェースを通じてのみアクセス"
+        ]
+      }
+    },
+    {
+      "term": {
+        "name": "DDD",
+        "definition": "ドメイン駆動設計（Domain-Driven Design）。複雑なソフトウェアの核心にあるドメインとドメインロジックに焦点を当てた設計手法",
+        "aliases": [
+          "ドメイン駆動設計",
+          "Domain-Driven Design"
+        ],
+        "context": {
+          "boundedContext": "アーキテクチャ設計コンテキスト",
+          "scope": "ビジネスドメインの複雑性を管理するための設計手法と実装パターン"
+        }
+      },
+      "details": {
+        "category": "設計手法",
+        "examples": [
+          {
+            "scenario": "MCPサーバーのリファクタリング",
+            "description": "機能定義とユビキタス言語情報をエンティティとして定義し、FeatureName・TermNameを値オブジェクトとして実装"
+          }
+        ],
+        "ambiguitiesAndBoundaries": [
+          "単なるデータベース設計ではなく、ビジネスロジックとドメイン知識の表現",
+          "技術的な実装詳細ではなく、ビジネス価値に焦点を当てる"
+        ]
+      },
+      "relationships": {
+        "relatedTerms": [
+          {
+            "termName": "クリーンアーキテクチャ",
+            "relationshipType": "組み合わせて使用される設計手法"
+          },
+          {
+            "termName": "機能定義",
+            "relationshipType": "DDDのエンティティとして設計される"
+          }
+        ],
+        "associatedFunctions": [
+          "FeatureDefinitionManager"
+        ]
+      },
+      "implementation": {
+        "codeMapping": "src/domain/層全体",
+        "dataStructureHint": {
+          "entities": "Feature, Term",
+          "valueObjects": "FeatureName, TermName",
+          "repositories": "IFeatureRepository, ITermRepository"
+        },
+        "constraints": [
+          "エンティティは一意のIDを持つ",
+          "値オブジェクトはイミュータブル",
+          "ドメインロジックはドメイン層に集約"
+        ]
+      }
+    }
+  ]
 }
