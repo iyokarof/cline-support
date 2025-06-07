@@ -1,0 +1,116 @@
+{
+  "features": [
+    // 機能設計書です。ここにリスト形式で各機能を記述します
+    {
+      "feature": {
+        "name": "string (機能の簡潔な名前、例: KeywordExtractor)",
+        "purpose": "string (この機能が何を達成するためのものか、1-2文で説明)",
+        "userStories": [
+          "string (この機能が解決するユーザーシナリオ、例: ユーザーとして、テキストからキーワードを抽出したい。なぜなら、テキストの傾向を分析できるようにするため。)"
+        ]
+      },
+      "inputs": [
+        {
+          "name": "string (入力パラメータの概念名、例: sourceText)",
+          "dataTypeDescription": "string (データの種類や期待される形式の言語非依存な説明、例: 'まとまった量のプレーンテキスト', '数値のリスト')",
+          "constraints": [
+            "string (制約条件のリスト、例: '必須入力', '空であってはならない', '正の整数のみ')"
+          ],
+          "purpose": "string (この入力が機能の中でどのように使われるか)"
+        }
+        // 他の入力があれば同様に記述
+      ],
+      "outputs": [
+        {
+          "condition": "string (出力条件の説明、例: '正常処理完了時', '入力データが不正だった場合')",
+          "dataDescription": "string (出力されるデータの言語非依存な説明、例: '抽出されたキーワードとその出現回数のペアのリスト', 'エラーメッセージを含むオブジェクト')",
+          "structureHint": {
+            // 構造のヒントを記述。例:
+            // "type": "list", "itemType": {"keyword": "string", "count": "integer"}
+            // "type": "object", "properties": {"errorMessage": "string", "errorCode": "integer"}
+          }
+        }
+        // 他の出力条件があれば同様に記述
+      ],
+      "coreLogicSteps": [
+        {
+          "stepNumber": "integer (処理の順序)",
+          "description": "string (このステップで行う主要な処理内容の簡潔な説明。副作用があれば明記)",
+          "inputs": [
+            "string (このステップで使用するデータの名前やステップ番号、例: 'sourceText', 'step1_output')"
+          ],
+          "output": "string (このステップが生み出す主要な中間データや最終結果の名前)"
+        }
+        // 他の論理ステップがあれば同様に記述
+      ],
+      "errorHandling": [
+        {
+          "errorCondition": "string (想定されるエラーや例外的な状況の説明)",
+          "detectionPoint": "string (どのcoreLogicStepでこのエラーが検知されうるか)",
+          "handlingStrategyDescription": "string (このエラーをどのように処理するかの言語非依存な方針、例: 'エラー情報を付与して特定の出力を返す', '処理を中断し、呼び出し元に通知する')",
+          "resultingOutputCondition": "string (このエラー処理の結果、どのoutputsのconditionに合致するか)"
+        }
+      ],
+      "nonFunctionalRequirements": [
+        {
+          "requirement": "string (非機能要件、例: '処理速度は100KBのテキストに対し1秒以内であること', 'メモリ使用量は入力サイズの2倍以内に抑えること')",
+          "considerationsForLogic": "string (この要件がcoreLogicStepsにどう影響するか)"
+        }
+      ],
+      "documentationNotes": [
+        "string (この機能を理解する上で特に重要となる点や、ドキュメントに残すべき設計判断など)"
+      ]
+    }
+  ],
+  "terms": [
+    // ユビキタス言語辞書です。ここに用語をリスト形式で記述します
+    {
+      "term": {
+        "name": "string (正規の用語名。チームで合意した唯一の名称。例: 顧客)",
+        "definition": "string (この用語が何を指すのか、ビジネスの観点から明確かつ簡潔に説明)",
+        "aliases": [
+          "string (別名や同義語のリスト。ただし、この辞書では'name'を正とする。例: クライアント, 購入者)"
+        ],
+        "context": {
+          "boundedContext": "string (この用語が主に使われる境界づけられたコンテキスト。例: '販売管理', '在庫管理')",
+          "scope": "string (この用語の適用範囲に関する補足説明。例: 'プロジェクト全体で共通', '特定のAPIレスポンス内でのみ使用')"
+        }
+      },
+      "details": {
+        "category": "string (用語の分類。例: 'エンティティ', '値オブジェクト', 'ドメインイベント', 'ポリシー')",
+        "examples": [
+          {
+            "scenario": "string (この用語が使われる具体的なシナリオ)",
+            "description": "string (シナリオ内での用例や振る舞いの説明。例: '新規ユーザーが初めて商品を購入した時点で「顧客」となる')"
+          }
+        ],
+        "ambiguitiesAndBoundaries": [
+          "string (よくある誤解や、この用語が「何を指さないか」を明確にする記述のリスト。例: 'ゲストユーザーは「顧客」ではない', '一度取引がキャンセルされた場合は「元顧客」として扱う')"
+        ]
+      },
+      "relationships": {
+        "relatedTerms": [
+          {
+            "termName": "string (関連する別の用語のname)",
+            "relationshipType": "string (関連の種類を説明。例: 'が持つ(has-a)', 'の一種(is-a)', 'によって生成される', 'を集約する')"
+          }
+          // 他の関連用語があれば同様に記述
+        ],
+        "associatedFunctions": [
+          "string (この用語が深く関連する機能の名前。機能設計書のfeature.nameとリンクさせると効果的。例: 'KeywordExtractor')"
+        ]
+      },
+      "implementation": {
+        "codeMapping": "string (ソースコード上での対応物。クラス名、型名、変数名など。例: 'CustomerEntity', 'Order.customerId')",
+        "dataStructureHint": {
+          // データ構造のヒントを記述。
+          // "type": "object", "properties": {"id": "string", "name": "string", "status": "CustomerStatus"}
+        },
+        "constraints": [
+          "string (データとしての制約条件。例: 'IDはUUIDv4形式', '名前は必須入力')"
+        ]
+      }
+    }
+    // 他の用語があれば同様に記述
+  ]
+}
