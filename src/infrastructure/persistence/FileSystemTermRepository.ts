@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { Term } from '../../domain/entities/Term.js';
 import { TermName } from '../../domain/valueObjects/TermName.js';
 import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
@@ -7,6 +8,9 @@ import { TermListItemData, OperationResultData, DeletionResultData, DesignDocume
 import { Result, Option } from '../../shared/types/functional.js';
 import { CONFIG } from '../../shared/constants/config.js';
 import { MESSAGES } from '../../shared/constants/messages.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * ファイルシステムを使用したユビキタス言語情報リポジトリの実装
