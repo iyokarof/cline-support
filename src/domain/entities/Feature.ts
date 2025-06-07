@@ -1,7 +1,7 @@
-import { FeatureName } from '../valueObjects/FeatureName.js';
-import { FeatureData, InputData, OutputData, CoreLogicStepData } from '../types.js';
-import { Result, ValidationResult } from '../../shared/types/functional.js';
-import { CONFIG } from '../../shared/constants/config.js';
+import { FeatureName } from '../valueObjects/FeatureName';
+import { FeatureData, InputData, OutputData, CoreLogicStepData } from '../types';
+import { Result, ValidationResult } from '../../shared/types/functional';
+import { CONFIG } from '../../shared/constants/config';
 
 /**
  * 機能定義エンティティ

@@ -1,7 +1,7 @@
-import { FeatureName } from '../../domain/valueObjects/FeatureName.js';
-import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository.js';
-import { DeletionResultData } from '../../domain/types.js';
-import { Result } from '../../shared/types/functional.js';
+import { FeatureName } from '../../domain/valueObjects/FeatureName';
+import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository';
+import { DeletionResultData } from '../../domain/types';
+import { Result } from '../../shared/types/functional';
 
 /**
  * 機能定義削除ユースケース

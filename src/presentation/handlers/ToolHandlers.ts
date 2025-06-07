@@ -3,22 +3,22 @@ import {
   ListToolsRequestSchema,
   ErrorCode,
   McpError,
-} from '@modelcontextprotocol/sdk/types.js';
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { AddOrUpdateFeatureUseCase } from '../../application/usecases/AddOrUpdateFeatureUseCase.js';
-import { DeleteFeatureUseCase } from '../../application/usecases/DeleteFeatureUseCase.js';
-import { AddOrUpdateTermUseCase } from '../../application/usecases/AddOrUpdateTermUseCase.js';
-import { DeleteTermUseCase } from '../../application/usecases/DeleteTermUseCase.js';
-import { GetDetailsUseCase } from '../../application/usecases/GetDetailsUseCase.js';
-import { MESSAGES } from '../../shared/constants/messages.js';
-import { CONFIG } from '../../shared/constants/config.js';
+} from '@modelcontextprotocol/sdk/types';
+import { Server } from '@modelcontextprotocol/sdk/server/index';
+import { AddOrUpdateFeatureUseCase } from '../../application/usecases/AddOrUpdateFeatureUseCase';
+import { DeleteFeatureUseCase } from '../../application/usecases/DeleteFeatureUseCase';
+import { AddOrUpdateTermUseCase } from '../../application/usecases/AddOrUpdateTermUseCase';
+import { DeleteTermUseCase } from '../../application/usecases/DeleteTermUseCase';
+import { GetDetailsUseCase } from '../../application/usecases/GetDetailsUseCase';
+import { MESSAGES } from '../../shared/constants/messages';
+import { CONFIG } from '../../shared/constants/config';
 import {
   addOrUpdateFeatureSchema,
   addOrUpdateTermSchema,
   deleteFeatureSchema,
   deleteTermSchema,
   getDetailsSchema,
-} from '../../schemas/toolSchemas.js';
+} from '../../schemas/toolSchemas';
 
 /**
  * MCPツールハンドラーのプレゼンテーション層実装

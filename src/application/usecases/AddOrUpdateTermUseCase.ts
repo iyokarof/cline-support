@@ -1,8 +1,8 @@
-import { Term } from '../../domain/entities/Term.js';
-import { TermName } from '../../domain/valueObjects/TermName.js';
-import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
-import { TermData, OperationResultData } from '../../domain/types.js';
-import { Result } from '../../shared/types/functional.js';
+import { Term } from '../../domain/entities/Term';
+import { TermName } from '../../domain/valueObjects/TermName';
+import { ITermRepository } from '../../domain/repositories/ITermRepository';
+import { TermData, OperationResultData } from '../../domain/types';
+import { Result } from '../../shared/types/functional';
 
 /**
  * ユビキタス言語情報追加・更新ユースケース

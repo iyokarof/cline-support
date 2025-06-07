@@ -1,5 +1,5 @@
-import { Result } from '../../shared/types/functional.js';
-import { CONFIG } from '../../shared/constants/config.js';
+import { Result } from '../../shared/types/functional';
+import { CONFIG } from '../../shared/constants/config';
 
 /**
  * 機能名を表現する値オブジェクト

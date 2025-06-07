@@ -1,8 +1,8 @@
-import { Feature } from '../../domain/entities/Feature.js';
-import { FeatureName } from '../../domain/valueObjects/FeatureName.js';
-import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository.js';
-import { FeatureData, OperationResultData } from '../../domain/types.js';
-import { Result } from '../../shared/types/functional.js';
+import { Feature } from '../../domain/entities/Feature';
+import { FeatureName } from '../../domain/valueObjects/FeatureName';
+import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository';
+import { FeatureData, OperationResultData } from '../../domain/types';
+import { Result } from '../../shared/types/functional';
 
 /**
  * 機能定義追加・更新ユースケース

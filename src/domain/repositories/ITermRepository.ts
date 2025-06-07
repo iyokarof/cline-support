@@ -1,7 +1,7 @@
-import { Term } from '../entities/Term.js';
-import { TermName } from '../valueObjects/TermName.js';
-import { TermListItemData, OperationResultData, DeletionResultData } from '../types.js';
-import { Result, Option } from '../../shared/types/functional.js';
+import { Term } from '../entities/Term';
+import { TermName } from '../valueObjects/TermName';
+import { TermListItemData, OperationResultData, DeletionResultData } from '../types';
+import { Result, Option } from '../../shared/types/functional';
 
 /**
  * ユビキタス言語情報リポジトリのインターフェース

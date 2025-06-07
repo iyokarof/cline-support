@@ -3,12 +3,12 @@ import {
   ReadResourceRequestSchema,
   ErrorCode,
   McpError,
-} from '@modelcontextprotocol/sdk/types.js';
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository.js';
-import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
-import { CONFIG } from '../../shared/constants/config.js';
-import { MESSAGES } from '../../shared/constants/messages.js';
+} from '@modelcontextprotocol/sdk/types';
+import { Server } from '@modelcontextprotocol/sdk/server/index';
+import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository';
+import { ITermRepository } from '../../domain/repositories/ITermRepository';
+import { CONFIG } from '../../shared/constants/config';
+import { MESSAGES } from '../../shared/constants/messages';
 
 /**
  * MCPリソースハンドラーのプレゼンテーション層実装

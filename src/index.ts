@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { ClineSupportServer } from './infrastructure/mcp/ClineSupportServer.js';
+import { ClineSupportServer } from './infrastructure/mcp/ClineSupportServer';
 
 /**
  * clineサポート用MCPサーバー エントリーポイント

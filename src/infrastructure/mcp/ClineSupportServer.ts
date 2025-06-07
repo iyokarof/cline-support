@@ -1,16 +1,16 @@
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { FileSystemFeatureRepository } from '../persistence/FileSystemFeatureRepository.js';
-import { FileSystemTermRepository } from '../persistence/FileSystemTermRepository.js';
-import { AddOrUpdateFeatureUseCase } from '../../application/usecases/AddOrUpdateFeatureUseCase.js';
-import { DeleteFeatureUseCase } from '../../application/usecases/DeleteFeatureUseCase.js';
-import { AddOrUpdateTermUseCase } from '../../application/usecases/AddOrUpdateTermUseCase.js';
-import { DeleteTermUseCase } from '../../application/usecases/DeleteTermUseCase.js';
-import { GetDetailsUseCase } from '../../application/usecases/GetDetailsUseCase.js';
-import { ToolHandlers } from '../../presentation/handlers/ToolHandlers.js';
-import { ResourceHandlers } from '../../presentation/handlers/ResourceHandlers.js';
-import { CONFIG } from '../../shared/constants/config.js';
-import { MESSAGES } from '../../shared/constants/messages.js';
+import { Server } from '@modelcontextprotocol/sdk/server/index';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio';
+import { FileSystemFeatureRepository } from '../persistence/FileSystemFeatureRepository';
+import { FileSystemTermRepository } from '../persistence/FileSystemTermRepository';
+import { AddOrUpdateFeatureUseCase } from '../../application/usecases/AddOrUpdateFeatureUseCase';
+import { DeleteFeatureUseCase } from '../../application/usecases/DeleteFeatureUseCase';
+import { AddOrUpdateTermUseCase } from '../../application/usecases/AddOrUpdateTermUseCase';
+import { DeleteTermUseCase } from '../../application/usecases/DeleteTermUseCase';
+import { GetDetailsUseCase } from '../../application/usecases/GetDetailsUseCase';
+import { ToolHandlers } from '../../presentation/handlers/ToolHandlers';
+import { ResourceHandlers } from '../../presentation/handlers/ResourceHandlers';
+import { CONFIG } from '../../shared/constants/config';
+import { MESSAGES } from '../../shared/constants/messages';
 
 /**
  * clineサポート用MCPサーバー

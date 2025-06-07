@@ -1,7 +1,7 @@
-import { Feature } from '../entities/Feature.js';
-import { FeatureName } from '../valueObjects/FeatureName.js';
-import { FeatureListItemData, OperationResultData, DeletionResultData } from '../types.js';
-import { Result, Option } from '../../shared/types/functional.js';
+import { Feature } from '../entities/Feature';
+import { FeatureName } from '../valueObjects/FeatureName';
+import { FeatureListItemData, OperationResultData, DeletionResultData } from '../types';
+import { Result, Option } from '../../shared/types/functional';
 
 /**
  * 機能定義リポジトリのインターフェース
