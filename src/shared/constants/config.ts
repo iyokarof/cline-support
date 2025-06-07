@@ -8,6 +8,18 @@ export const CONFIG = {
     VERSION: '1.0.0',
   },
 
+  /** REST API設定 */
+  REST_API: {
+    PORT: process.env.PORT ? parseInt(process.env.PORT) : 3000,
+    HOST: process.env.HOST || 'localhost',
+    CORS: {
+      ORIGIN: process.env.CORS_ORIGIN || '*',
+      METHODS: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      ALLOWED_HEADERS: ['Content-Type', 'Authorization'],
+    },
+    BASE_PATH: '/api',
+  },
+
   /** ファイルパス設定 */
   PATHS: {
     DATA_DIRECTORY: '../data',
