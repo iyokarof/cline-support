@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
-import { AddOrUpdateFeatureUseCase } from '../../application/usecases/AddOrUpdateFeatureUseCase';
-import { DeleteFeatureUseCase } from '../../application/usecases/DeleteFeatureUseCase';
-import { AddOrUpdateTermUseCase } from '../../application/usecases/AddOrUpdateTermUseCase';
-import { DeleteTermUseCase } from '../../application/usecases/DeleteTermUseCase';
-import { GetDetailsUseCase } from '../../application/usecases/GetDetailsUseCase';
-import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository';
-import { ITermRepository } from '../../domain/repositories/ITermRepository';
-import { MESSAGES } from '../../shared/constants/messages';
+import { AddOrUpdateFeatureUseCase } from '../../application/usecases/AddOrUpdateFeatureUseCase.js';
+import { DeleteFeatureUseCase } from '../../application/usecases/DeleteFeatureUseCase.js';
+import { AddOrUpdateTermUseCase } from '../../application/usecases/AddOrUpdateTermUseCase.js';
+import { DeleteTermUseCase } from '../../application/usecases/DeleteTermUseCase.js';
+import { GetDetailsUseCase } from '../../application/usecases/GetDetailsUseCase.js';
+import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository.js';
+import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
+import { MESSAGES } from '../../shared/constants/messages.js';
 
 /**
  * REST APIハンドラーのプレゼンテーション層実装

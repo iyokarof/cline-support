@@ -1,7 +1,7 @@
-import { TermName } from '../../domain/valueObjects/TermName';
-import { ITermRepository } from '../../domain/repositories/ITermRepository';
-import { DeletionResultData } from '../../domain/types';
-import { Result } from '../../shared/types/functional';
+import { TermName } from '../../domain/valueObjects/TermName.js';
+import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
+import { DeletionResultData } from '../../domain/types.js';
+import { Result } from '../../shared/types/functional.js';
 
 /**
  * ユビキタス言語情報削除ユースケース

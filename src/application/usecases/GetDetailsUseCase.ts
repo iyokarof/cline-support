@@ -1,9 +1,9 @@
-import { FeatureName } from '../../domain/valueObjects/FeatureName';
-import { TermName } from '../../domain/valueObjects/TermName';
-import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository';
-import { ITermRepository } from '../../domain/repositories/ITermRepository';
-import { DetailsResponseData } from '../../domain/types';
-import { Result } from '../../shared/types/functional';
+import { FeatureName } from '../../domain/valueObjects/FeatureName.js';
+import { TermName } from '../../domain/valueObjects/TermName.js';
+import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository.js';
+import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
+import { DetailsResponseData } from '../../domain/types.js';
+import { Result } from '../../shared/types/functional.js';
 
 /**
  * 詳細取得ユースケース

@@ -1,12 +1,12 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { Feature } from '../../domain/entities/Feature';
-import { FeatureName } from '../../domain/valueObjects/FeatureName';
-import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository';
-import { FeatureListItemData, OperationResultData, DeletionResultData, DesignDocumentData } from '../../domain/types';
-import { Result, Option } from '../../shared/types/functional';
-import { CONFIG } from '../../shared/constants/config';
-import { MESSAGES } from '../../shared/constants/messages';
+import { Feature } from '../../domain/entities/Feature.js';
+import { FeatureName } from '../../domain/valueObjects/FeatureName.js';
+import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository.js';
+import { FeatureListItemData, OperationResultData, DeletionResultData, DesignDocumentData } from '../../domain/types.js';
+import { Result, Option } from '../../shared/types/functional.js';
+import { CONFIG } from '../../shared/constants/config.js';
+import { MESSAGES } from '../../shared/constants/messages.js';
 
 /**
  * ファイルシステムを使用した機能定義リポジトリの実装

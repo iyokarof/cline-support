@@ -1,6 +1,6 @@
-import { TermName } from '../valueObjects/TermName';
-import { TermData, ExampleData, RelatedTermData } from '../types';
-import { Result, ValidationResult } from '../../shared/types/functional';
+import { TermName } from '../valueObjects/TermName.js';
+import { TermData, ExampleData, RelatedTermData } from '../types.js';
+import { Result, ValidationResult } from '../../shared/types/functional.js';
 
 /**
  * ユビキタス言語情報エンティティ

@@ -1,5 +1,5 @@
-import { Result } from '../../shared/types/functional';
-import { CONFIG } from '../../shared/constants/config';
+import { Result } from '../../shared/types/functional.js';
+import { CONFIG } from '../../shared/constants/config.js';
 
 /**
  * ユビキタス言語の用語名を表現する値オブジェクト

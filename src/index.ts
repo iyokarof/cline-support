@@ -16,7 +16,7 @@ async function main() {
     switch (serverMode.toLowerCase()) {
       case 'rest':
         console.log('🌐 REST APIモードで起動しています...');
-        const { RestServer } = await import('./infrastructure/rest/RestServer');
+        const { RestServer } = await import('./infrastructure/rest/RestServer.js');
         const restServer = new RestServer();
         await restServer.run();
         break;
@@ -24,7 +24,7 @@ async function main() {
       case 'mcp':
       default:
         console.log('🔗 MCPモードで起動しています...');
-        const { ClineSupportServer } = await import('./infrastructure/mcp/ClineSupportServer');
+        const { ClineSupportServer } = await import('./infrastructure/mcp/ClineSupportServer.js');
         const mcpServer = new ClineSupportServer();
         await mcpServer.run();
         break;

@@ -1,6 +1,7 @@
 {
   "name": "cline-support-server",
   "version": "1.0.0",
+  "type": "module",
   "main": "build/index.js",
   "scripts": {
     "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",

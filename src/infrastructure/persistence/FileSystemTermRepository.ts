@@ -1,12 +1,12 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { Term } from '../../domain/entities/Term';
-import { TermName } from '../../domain/valueObjects/TermName';
-import { ITermRepository } from '../../domain/repositories/ITermRepository';
-import { TermListItemData, OperationResultData, DeletionResultData, DesignDocumentData } from '../../domain/types';
-import { Result, Option } from '../../shared/types/functional';
-import { CONFIG } from '../../shared/constants/config';
-import { MESSAGES } from '../../shared/constants/messages';
+import { Term } from '../../domain/entities/Term.js';
+import { TermName } from '../../domain/valueObjects/TermName.js';
+import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
+import { TermListItemData, OperationResultData, DeletionResultData, DesignDocumentData } from '../../domain/types.js';
+import { Result, Option } from '../../shared/types/functional.js';
+import { CONFIG } from '../../shared/constants/config.js';
+import { MESSAGES } from '../../shared/constants/messages.js';
 
 /**
  * ファイルシステムを使用したユビキタス言語情報リポジトリの実装
