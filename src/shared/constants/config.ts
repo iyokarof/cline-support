@@ -22,7 +22,7 @@ export const CONFIG = {
 
   /** ファイルパス設定 */
   PATHS: {
-    DATA_DIRECTORY: '../data',
+    DATA_DIRECTORY: 'data',
     DESIGN_DOCUMENT_FILE: 'design.json',
   },
 
