@@ -4,6 +4,7 @@ import { IFeatureRepository } from '../../domain/repositories/IFeatureRepository
 import { ITermRepository } from '../../domain/repositories/ITermRepository.js';
 import { DetailsResponseData } from '../../domain/types.js';
 import { Result } from '../../shared/types/functional.js';
+import { MESSAGES } from '../../shared/constants/messages.js';
 
 /**
  * 詳細取得ユースケース
@@ -121,6 +122,14 @@ export class GetDetailsUseCase {
    * 入力パラメータの事前検証
    */
   validateInput(featureNames?: any, termNames?: any): Result<void, Error> {
+    // 両方のパラメータが空または未指定の場合はエラー
+    const hasFeatureNames = featureNames !== undefined && Array.isArray(featureNames) && featureNames.length > 0;
+    const hasTermNames = termNames !== undefined && Array.isArray(termNames) && termNames.length > 0;
+    
+    if (!hasFeatureNames && !hasTermNames) {
+      return Result.failure(new Error(MESSAGES.ERROR.EMPTY_DETAILS_PARAMS()));
+    }
+
     // 機能名の検証
     if (featureNames !== undefined) {
       if (!Array.isArray(featureNames)) {

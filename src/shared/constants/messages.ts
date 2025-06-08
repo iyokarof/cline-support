@@ -28,6 +28,11 @@ export const MESSAGES = {
     DESIGN_LOAD_FAILED: (error: string) => `設計書ファイルの読み込みに失敗しました: ${error}`,
     RESOURCE_FETCH_FAILED: (error: string) => `リソースの取得中にエラーが発生しました: ${error}`,
     TOOL_EXECUTION_FAILED: (error: string) => `ツール実行エラー: ${error}`,
+    EMPTY_DETAILS_PARAMS: () => 
+      'featureNamesまたはtermNamesのいずれかを指定してください。\n' +
+      '利用可能な項目を確認するには、以下のリソースをご利用ください:\n' +
+      '- 機能定義一覧: design://features/list\n' +
+      '- ユビキタス言語一覧: design://terms/list',
   },
 
   /** 情報メッセージ */

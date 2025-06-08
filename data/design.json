@@ -133,6 +133,112 @@
         "既存機能名との重複チェックは配列の線形検索で実装",
         "バリデーションは型定義とランタイム検証の二重チェック"
       ]
+    },
+    {
+      "feature": {
+        "name": "GetDetailsEmptyParametersValidation",
+        "purpose": "get_detailsツールで空のパラメータが指定された場合にエラーを返し、適切なガイダンスを提供する",
+        "userStories": [
+          "ユーザーがget_detailsを空のパラメータで実行した場合、有用なエラーメッセージとリソース索引への案内を受け取りたい",
+          "ユーザーが意図せず空の配列でget_detailsを実行した場合、どのリソースを使用すべきかの指針を得たい"
+        ]
+      },
+      "inputs": [
+        {
+          "name": "featureNames",
+          "dataTypeDescription": "文字列の配列（省略可能）",
+          "constraints": [
+            "配列の場合は各要素が文字列である必要がある",
+            "空の配列は無効"
+          ],
+          "purpose": "取得したい機能定義の名前を指定"
+        },
+        {
+          "name": "termNames",
+          "dataTypeDescription": "文字列の配列（省略可能）",
+          "constraints": [
+            "配列の場合は各要素が文字列である必要がある",
+            "空の配列は無効"
+          ],
+          "purpose": "取得したいユビキタス言語情報の名前を指定"
+        }
+      ],
+      "outputs": [
+        {
+          "condition": "両方のパラメータが空または未指定の場合",
+          "dataDescription": "エラーメッセージとリソース索引への案内",
+          "structureHint": {
+            "isError": true,
+            "message": "パラメータ指定の案内とリソースURI"
+          }
+        },
+        {
+          "condition": "有効なパラメータが指定された場合",
+          "dataDescription": "詳細情報の取得結果",
+          "structureHint": {
+            "features": "array",
+            "terms": "array",
+            "notFound": "object"
+          }
+        }
+      ],
+      "coreLogicSteps": [
+        {
+          "stepNumber": 1,
+          "description": "入力パラメータの存在と有効性をチェック",
+          "inputs": [
+            "featureNames",
+            "termNames"
+          ],
+          "output": "validationResult"
+        },
+        {
+          "stepNumber": 2,
+          "description": "両方のパラメータが空または無効な場合のエラーメッセージ生成",
+          "inputs": [
+            "validationResult"
+          ],
+          "output": "guidanceErrorMessage"
+        },
+        {
+          "stepNumber": 3,
+          "description": "有効なパラメータの場合は通常の詳細取得処理を実行",
+          "inputs": [
+            "validatedFeatureNames",
+            "validatedTermNames"
+          ],
+          "output": "detailsResponse"
+        }
+      ],
+      "errorHandling": [
+        {
+          "errorCondition": "featureNamesとtermNamesの両方が空または未指定",
+          "detectionPoint": "ステップ1の入力検証",
+          "handlingStrategyDescription": "リソース索引のURIを含む案内メッセージを返す",
+          "resultingOutputCondition": "両方のパラメータが空または未指定の場合"
+        },
+        {
+          "errorCondition": "パラメータの型が不正（配列以外）",
+          "detectionPoint": "ステップ1の入力検証",
+          "handlingStrategyDescription": "型に関するエラーメッセージを返す",
+          "resultingOutputCondition": "両方のパラメータが空または未指定の場合"
+        }
+      ],
+      "nonFunctionalRequirements": [
+        {
+          "requirement": "ユーザビリティ: エラーメッセージは建設的で解決策を提示する",
+          "considerationsForLogic": "ステップ2でリソースURIを含む具体的な案内を生成"
+        },
+        {
+          "requirement": "一貫性: 既存のバリデーション機能との整合性を保つ",
+          "considerationsForLogic": "ステップ1で既存のvalidateInputメソッドを拡張"
+        }
+      ],
+      "documentationNotes": [
+        "リソース索引のURIは design://features/list と design://terms/list を使用",
+        "MCPとREST API両方で同じバリデーションロジックを共有",
+        "エラーハンドリングでは例外ではなくResultパターンを使用してエラー情報を返す"
+      ]
     }
   ],
   "terms": [

@@ -333,10 +333,15 @@ export class ToolHandlers {
       args?.termNames
     );
     if (!validationResult.success) {
-      throw new McpError(
-        ErrorCode.InvalidParams,
-        validationResult.error.message
-      );
+      return {
+        content: [
+          {
+            type: 'text',
+            text: validationResult.error.message,
+          },
+        ],
+        isError: true,
+      };
     }
 
     // ユースケースの実行
